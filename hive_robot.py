@@ -5,8 +5,10 @@ from datetime import datetime
 from beem.market import Market
 from beem.account import Account
 
-account = Account("alpha-omega")
+hive_name = ""
+account = Account(hive_name)
 sleep_time = 30
+diff_threshold = 1.2
 
 def func1(hive_hbd, hive_usdt):
     return abs(hive_hbd-hive_usdt) / max(hive_hbd, hive_usdt) * 100
@@ -49,8 +51,8 @@ def main():
             time.sleep(sleep_time)
             continue
         diff = func1(hive_hbd, hive_usd)
-        #diff in [0.1, 1)
-        if diff >= 0.1 and diff < 1:
+        #diff smaller than diff_threshold
+        if diff < diff_threshold:
             dt = datetime.fromtimestamp(int(time.time()))
             if mode != 1 or dt.minute==0 and dt.second==0:
                 mode = 1
